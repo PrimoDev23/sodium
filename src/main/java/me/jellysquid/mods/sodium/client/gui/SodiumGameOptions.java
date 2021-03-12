@@ -35,7 +35,7 @@ public class SodiumGameOptions {
         public boolean useAdvancedEntityCulling = true;
         public boolean useParticleCulling = true;
         public boolean useFogOcclusion = true;
-        public boolean useCompactVertexFormat = true;
+        public VertexFormat vertexFormat = VertexFormat.HFP;
         public boolean useChunkFaceCulling = true;
         public boolean useMemoryIntrinsics = true;
         public boolean disableDriverBlacklist = false;
@@ -118,6 +118,23 @@ public class SodiumGameOptions {
 
         public boolean isFancy(GraphicsMode graphicsMode) {
             return (this == FANCY) || (this == DEFAULT && (graphicsMode == GraphicsMode.FANCY || graphicsMode == GraphicsMode.FABULOUS));
+        }
+    }
+
+    public enum VertexFormat implements TextProvider {
+        SFP("SFP"),
+        HFP("HFP"),
+        ULTRA("Ultra");
+
+        private final String name;
+
+        VertexFormat(String name) {
+            this.name = name;
+        }
+
+        @Override
+        public String getLocalizedName() {
+            return this.name;
         }
     }
 
