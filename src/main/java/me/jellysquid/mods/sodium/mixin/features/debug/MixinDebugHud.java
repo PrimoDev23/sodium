@@ -37,6 +37,7 @@ public abstract class MixinDebugHud {
 
         strings.add("");
         strings.addAll(getChunkRendererDebugStrings());
+        strings.add("Updated sodium for 1.16.1 by PrimoDev23");
 
         if (SodiumClientMod.options().advanced.disableDriverBlacklist) {
             strings.add(Formatting.RED + "(!!) Driver blacklist ignored");
