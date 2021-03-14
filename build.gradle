@@ -9,7 +9,7 @@ archivesBaseName = "${project.archives_base_name}-mc${project.minecraft_version}
 version = project.mod_version
 group = project.maven_group
 
-def build_release = System.getenv("BUILD_RELEASE") == "true"
+def build_release = true
 def build_id = System.getenv("BUILD_ID")
 
 if (!build_release) {
