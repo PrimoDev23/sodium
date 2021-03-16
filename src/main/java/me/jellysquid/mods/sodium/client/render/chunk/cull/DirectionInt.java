@@ -28,22 +28,7 @@ public class DirectionInt {
     }
 
     public static int getOpposite(int dir) {
-        switch (dir) {
-            case DOWN:
-                return UP;
-            case UP:
-                return DOWN;
-            case NORTH:
-                return SOUTH;
-            case SOUTH:
-                return NORTH;
-            case WEST:
-                return EAST;
-            case EAST:
-                return WEST;
-        }
-
-        return NULL;
+        return (-((5 + (~dir +1)) >> 31 & 1) - ((dir) >> 31 & 1) + 1) * ((dir ^ 1) + 1) - 1;
     }
 
     public static int[] all() {
