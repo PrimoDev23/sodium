@@ -15,21 +15,7 @@ public enum ModelQuadFacing {
     public static final int COUNT = VALUES.length;
 
     public static ModelQuadFacing fromDirection(Direction dir) {
-        switch (dir) {
-            case DOWN:
-                return DOWN;
-            case UP:
-                return UP;
-            case NORTH:
-                return NORTH;
-            case SOUTH:
-                return SOUTH;
-            case WEST:
-                return WEST;
-            case EAST:
-                return EAST;
-            default:
-                return UNASSIGNED;
-        }
+        int value = dir.getId();
+        return VALUES[value - (((5 + (~value + 1)) >> 31 & 1) + (value >> 31 & 1)) * (value - 6)];
     }
 }
