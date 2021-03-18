@@ -164,17 +164,17 @@ public class ChunkRenderManager implements ChunkStatusListener {
             }
         }
 
-        if (this.useFogCulling) {
-            if (this.usePlanarFog) {
-                if (render.getSquaredDepth(this.cameraX, this.cameraY, this.cameraZ, this.cameraHorizontalPlane) >= this.fogRenderCutoff) {
+        if(!render.isEmpty()) {
+            if (this.useFogCulling) {
+                if (this.usePlanarFog) {
+                    if (render.getSquaredDepth(this.cameraX, this.cameraY, this.cameraZ, this.cameraHorizontalPlane) >= this.fogRenderCutoff) {
+                        return;
+                    }
+                } else if (render.getSquaredDistance(this.cameraX, this.cameraY, this.cameraZ) >= this.fogRenderCutoff) {
                     return;
                 }
-            } else if (render.getSquaredDistance(this.cameraX, this.cameraY, this.cameraZ) >= this.fogRenderCutoff) {
-                return;
             }
-        }
-
-        if (!render.isEmpty()) {
+        
             this.addChunkToRenderLists(render);
             this.addEntitiesToRenderLists(render);
         }
