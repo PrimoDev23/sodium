@@ -322,12 +322,14 @@ public class ChunkRenderManager implements ChunkStatusListener {
             ChunkRenderContainer render = column.getRender(y);
 
             if (render != null) {
+                int renderId = render.getId();
+
                 render.delete();
 
                 this.renders.remove(render);
-                this.renderIds.deallocateId(render.getId());
+                this.renderIds.deallocateId(renderId);
 
-                this.culler.onSectionUnloaded(render.getId());
+                this.culler.onSectionUnloaded(renderId);
             }
         }
     }
