@@ -137,9 +137,7 @@ public class ChunkRenderManager implements ChunkStatusListener {
 
             if (dist != 0.0f) {
                 this.useFogCulling = true;
-                if (SodiumClientMod.options().unofficial.usePlanarFog) {
-                    this.usePlanarFog = true;
-                }
+                this.usePlanarFog = SodiumClientMod.options().unofficial.usePlanarFog;
                 this.fogRenderCutoff = Math.max(FOG_PLANE_MIN_DISTANCE, dist * dist);
             }
         }
