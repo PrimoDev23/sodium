@@ -24,12 +24,46 @@ public enum ModelQuadOrientation {
     /**
      * Determines the orientation of the vertices in the quad.
      */
-    public static ModelQuadOrientation orient(float[] brightnesses) {
+    public static ModelQuadOrientation orient(float[] brightnesses, int[] lightmaps) {
         // If one side of the quad is brighter, flip the sides
+
+        // Prioritize ambient occlusion over block/sky light
         if (brightnesses[0] + brightnesses[2] > brightnesses[1] + brightnesses[3]) {
             return NORMAL;
-        } else {
+        } else if (brightnesses[0] + brightnesses[2] < brightnesses[1] + brightnesses[3]) {
             return FLIP;
         }
+
+        // Use only the brightest of block or sky light for each vertex
+        int[] worldLight = new int[4];
+        for (int i = 0; i < 4; i++) {
+            worldLight[i] = Math.max(lightmaps[i] & 255, lightmaps[i] >> 16);
+        }
+
+        // Check which diagonal has the brightest vertex
+        if (Math.max(worldLight[0], worldLight[2]) < Math.max(worldLight[1], worldLight[3])) {
+            return FLIP;
+        } else if (Math.max(worldLight[0], worldLight[2]) > Math.max(worldLight[1], worldLight[3])) {
+            return NORMAL;
+        }
+
+        // Check if three vertices have identical light levels
+        if (worldLight[0] == worldLight[1] ^ worldLight[2] == worldLight[3]) {
+            if (worldLight[0] == worldLight[2]) {
+                return FLIP;
+            } else if (worldLight[1] == worldLight[3]) {
+                return NORMAL;
+            }
+        }
+
+        // Same as the ambient occlusion check, but returns the opposite orientation
+        if (worldLight[0] + worldLight[2] > worldLight[1] + worldLight[3]) {
+            return FLIP;
+        } else if (worldLight[0] + worldLight[2] < worldLight[1] + worldLight[3]) {
+            return NORMAL;
+        }
+
+        // if all previous checks fail, return the default orientation
+        return NORMAL;
     }
 }
