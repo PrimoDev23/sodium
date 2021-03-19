@@ -59,8 +59,6 @@ public enum ModelQuadOrientation {
         // Same as the ambient occlusion check, but returns the opposite orientation
         if (worldLight[0] + worldLight[2] > worldLight[1] + worldLight[3]) {
             return FLIP;
-        } else if (worldLight[0] + worldLight[2] < worldLight[1] + worldLight[3]) {
-            return NORMAL;
         }
 
         // if all previous checks fail, return the default orientation
