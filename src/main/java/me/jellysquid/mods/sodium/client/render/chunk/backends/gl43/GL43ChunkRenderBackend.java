@@ -423,7 +423,7 @@ public class GL43ChunkRenderBackend extends ChunkRenderBackendMultiDraw<LCBGraph
         long allocated = this.memoryTracker.getAllocatedMemory();
         long used = this.memoryTracker.getUsedMemory();
 
-        int ratio = (int) Math.floor(((double) used / (double) allocated) * 100.0D);
+        int ratio = (int) ((100 * used) / allocated);
 
         List<String> list = new ArrayList<>();
         list.add(String.format("VRAM Pool: %d/%d MiB %s(%d%%)%s", MemoryTracker.toMiB(used), MemoryTracker.toMiB(allocated),
