@@ -37,13 +37,13 @@ public enum ModelQuadOrientation {
         // Use only the brightest of block or sky light for each vertex
         int[] worldLight = new int[4];
         for (int i = 0; i < 4; i++) {
-            worldLight[i] = Math.max(lightmaps[i] & 255, lightmaps[i] >> 16);
+            worldLight[i] = Max(lightmaps[i] & 255, lightmaps[i] >> 16);
         }
 
         // Check which diagonal has the brightest vertex
-        if (Math.max(worldLight[0], worldLight[2]) < Math.max(worldLight[1], worldLight[3])) {
+        if (Max(worldLight[0], worldLight[2]) < Max(worldLight[1], worldLight[3])) {
             return FLIP;
-        } else if (Math.max(worldLight[0], worldLight[2]) > Math.max(worldLight[1], worldLight[3])) {
+        } else if (Max(worldLight[0], worldLight[2]) > Max(worldLight[1], worldLight[3])) {
             return NORMAL;
         }
 
@@ -63,5 +63,9 @@ public enum ModelQuadOrientation {
 
         // if all previous checks fail, return the default orientation
         return NORMAL;
+    }
+
+    private static int Max(int x, int y){
+        return y ^ ((x ^ y) & -(((x - y) >> 31) + 1));
     }
 }
